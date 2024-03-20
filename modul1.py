@@ -8,6 +8,23 @@ def sesli_harfleri_say(metin):
     sesli_harfler = 'aeıioöuüAEIİOÖUÜ'
     return sum(1 for harf in metin if harf in sesli_harfler)
 
+def harf_mi(karakter):
+    return karakter.isalpha()
+
+def harf_sikligi(metin):
+    harf_sayisi = {}
+    toplam_harf = sum(1 for harf in metin if harf.isalpha())
+    for harf in metin:
+        if harf.isalpha():
+            if harf in harf_sayisi:
+                harf_sayisi[harf] += 1
+            else:
+                harf_sayisi[harf] = 1
+    for harf, sayi in harf_sayisi.items():
+        harf_sayisi[harf] = (sayi / toplam_harf) * 100
+    return harf_sayisi
+
+
 def kelime_sayisi(metin):
     return len(metin.split())
 
@@ -42,10 +59,12 @@ def fonksiyon_secimi():
         print("6: En uzun kelimeyi bulma")
         print("7: Karakter sayısını bulma")
         print("8: Metni küçük harfe çevirme")
-        print("9: Çıkış (9 yazarak çıkabilirsiniz)")
-        secim = input("Seçiminizi yapın (1-9): ")
+        print("9: Harf mi kontrolü")
+        print("10: Harf kullanım sıklığı")
+        print("11: Çıkış (11 yazarak çıkabilirsiniz)")
+        secim = input("Seçiminizi yapın (1-11): ")
 
-        if secim == '9':
+        if secim == '11':
             print("Programdan çıkılıyor...")
             break
 
@@ -73,6 +92,15 @@ def fonksiyon_secimi():
         elif secim == '8':
             metin = input("Küçük harfe çevrilecek metni girin: ")
             print(f"Metnin küçük harfli hali: {kucuk_harf_yap(metin)}")
+        elif secim == '9':
+            karakter = input("Kontrol edilecek karakteri girin: ")
+            print(f"'{karakter}' bir harf mi? {harf_mi(karakter)}")
+        elif secim == '10':
+            metin = input("Harf kullanım sıklığını bulmak için metin girin: ")
+            siklik = harf_sikligi(metin)
+            print("Harf kullanım sıklığı:")
+            for harf, yuzde in siklik.items():
+                print(f"{harf}: %{yuzde:.2f}")
         else:
             print("Geçersiz seçim. Lütfen verilen seçeneklerden birini girin.")
 
